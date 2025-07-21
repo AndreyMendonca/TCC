@@ -1,7 +1,7 @@
-package com.andrey.tcc.exception.handler;
+package com.andrey.tcc.exceptions.handler;
 
-import com.andrey.tcc.exception.ExceptionResponse;
-import com.andrey.tcc.exception.ResourceNotFoundException;
+import com.andrey.tcc.exceptions.ExceptionResponse;
+import com.andrey.tcc.exceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

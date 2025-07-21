@@ -1,4 +1,4 @@
-package com.andrey.tcc.exception;
+package com.andrey.tcc.exceptions;
 
 import java.time.LocalDateTime;
 
