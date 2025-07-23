@@ -22,7 +22,7 @@ public class AluguelService {
     }
 
     public Aluguel findById(Long id){
-        Aluguel aluguel = repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Encarco não encontrado"));
+        Aluguel aluguel = repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Aluguel não encontrado"));
         return Mapper.parseObject(aluguel, Aluguel.class);
     }
 

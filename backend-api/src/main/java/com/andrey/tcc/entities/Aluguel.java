@@ -1,9 +1,6 @@
 package com.andrey.tcc.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -13,6 +10,8 @@ import java.util.Objects;
 @Entity
 @Table(name="tb_aluguel")
 public class Aluguel {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private BigDecimal valor;
 
