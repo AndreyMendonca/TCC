@@ -14,12 +14,17 @@ public class Encargo {
     private BigDecimal valor;
     private String descricao;
 
+    @ManyToOne
+    @JoinColumn(name = "aluguel_id")
+    private Aluguel aluguel;
+
     public Encargo(){}
 
-    public Encargo(Long id, BigDecimal valor, String descricao) {
+    public Encargo(Long id, BigDecimal valor, String descricao, Aluguel aluguel) {
         this.id = id;
         this.valor = valor;
         this.descricao = descricao;
+        this.aluguel = aluguel;
     }
 
     public Long getId() {
@@ -44,6 +49,14 @@ public class Encargo {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Aluguel getAluguel() {
+        return aluguel;
+    }
+
+    public void setAluguel(Aluguel aluguel) {
+        this.aluguel = aluguel;
     }
 
     @Override
