@@ -1,8 +1,7 @@
 package com.andrey.tcc.entities;
 
 import com.andrey.tcc.entities.enums.TipoPessoaEnum;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -10,6 +9,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "tb_pessoa")
 public class Pessoa {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nome;
     private String sobrenome;
@@ -18,6 +19,7 @@ public class Pessoa {
     private LocalDate dataNascimento;
     private String profissao;
     private Boolean ativa;
+    @Enumerated(EnumType.STRING)
     private TipoPessoaEnum tipoPessoa;
 
     public Pessoa(){}
