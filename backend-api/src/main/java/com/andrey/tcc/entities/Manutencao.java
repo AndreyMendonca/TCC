@@ -15,6 +15,10 @@ public class Manutencao {
     private String descricao;
     private LocalDate dataRealizacao;
 
+    @ManyToOne
+    @JoinColumn(name = "imovel_id")
+    private Imovel imovel;
+
     private Manutencao(){}
 
     public Manutencao(Long id, String identificao, String descricao, LocalDate dataRealizacao) {
