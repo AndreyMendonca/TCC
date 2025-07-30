@@ -5,8 +5,8 @@ const Page = () => {
 
     const breadcrumb: BreadcrumbRoute[] = [
         {
-            nome: "Dashboard",
-            rota: "/"
+            nome: "Imóveis",
+            rota: "/imoveis"
         }
     ]
 

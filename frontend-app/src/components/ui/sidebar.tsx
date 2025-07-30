@@ -53,6 +53,12 @@ function useSidebar() {
   return context
 }
 
+function getSidebarCookie() {
+  if (typeof document === "undefined") return undefined // garante execução só no client
+  const match = document.cookie.match(/sidebar_state=(true|false)/)
+  return match ? match[1] === "true" : undefined
+}
+
 function SidebarProvider({
   defaultOpen = true,
   open: openProp,
@@ -69,10 +75,20 @@ function SidebarProvider({
   const isMobile = useIsMobile()
   const [openMobile, setOpenMobile] = React.useState(false)
 
-  // This is the internal state of the sidebar.
-  // We use openProp and setOpenProp for control from outside the component.
-  const [_open, _setOpen] = React.useState(defaultOpen)
+  // Estado interno
+  const [_open, _setOpen] = React.useState<boolean>(defaultOpen)
+  const [isClientReady, setIsClientReady] = React.useState(false)
   const open = openProp ?? _open
+
+  // Após carregamento no client, atualiza com valor do cookie
+  React.useEffect(() => {
+    const cookieValue = getSidebarCookie()
+    if (cookieValue !== undefined) {
+      _setOpen(cookieValue)
+    }
+    setIsClientReady(true)
+  }, [])
+
   const setOpen = React.useCallback(
     (value: boolean | ((value: boolean) => boolean)) => {
       const openState = typeof value === "function" ? value(open) : value
@@ -80,6 +96,11 @@ function SidebarProvider({
         setOpenProp(openState)
       } else {
         _setOpen(openState)
+      }
+
+            // Atualiza cookie no client
+      if (typeof document !== "undefined") {
+        document.cookie = `sidebar_state=${openState}; path=/; max-age=31536000` // 1 ano
       }
 
       // This sets the cookie to keep the sidebar state.
@@ -125,7 +146,7 @@ function SidebarProvider({
     }),
     [state, open, setOpen, isMobile, openMobile, setOpenMobile, toggleSidebar]
   )
-
+  if (!isClientReady) return null
   return (
     <SidebarContext.Provider value={contextValue}>
       <TooltipProvider delayDuration={0}>
@@ -569,7 +590,7 @@ function SidebarMenuAction({
         "peer-data-[size=lg]/menu-button:top-2.5",
         "group-data-[collapsible=icon]:hidden",
         showOnHover &&
-          "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 md:opacity-0",
+        "peer-data-[active=true]/menu-button:text-sidebar-accent-foreground group-focus-within/menu-item:opacity-100 group-hover/menu-item:opacity-100 data-[state=open]:opacity-100 md:opacity-0",
         className
       )}
       {...props}
