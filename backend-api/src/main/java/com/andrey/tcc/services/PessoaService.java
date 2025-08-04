@@ -31,8 +31,11 @@ public class PessoaService {
     }
 
     public void update (Long id, Pessoa dto){
-        this.findById(id);
+        Pessoa pessoa = this.findById(id);
         dto.setId(id);
+        if(pessoa.getEndereco() != null){
+            dto.getEndereco().setId(pessoa.getEndereco().getId());
+        }
         repository.save(Mapper.parseObject(dto, Pessoa.class));
     }
 }

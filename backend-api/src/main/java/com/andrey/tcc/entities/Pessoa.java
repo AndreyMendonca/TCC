@@ -22,6 +22,10 @@ public class Pessoa {
     @Enumerated(EnumType.STRING)
     private TipoPessoaEnum tipoPessoa;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
+
     public Pessoa(){}
 
     public Pessoa(Long id, String nome, String sobrenome, String cpf, String email, LocalDate dataNascimento, String profissao, Boolean ativa, TipoPessoaEnum tipoPessoa) {
@@ -106,6 +110,14 @@ public class Pessoa {
 
     public void setTipoPessoa(TipoPessoaEnum tipoPessoa) {
         this.tipoPessoa = tipoPessoa;
+    }
+
+    public Endereco getEndereco() {
+        return endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
     }
 
     @Override
