@@ -1,5 +1,6 @@
 package com.andrey.tcc.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ public class Manutencao {
 
     @ManyToOne
     @JoinColumn(name = "imovel_id")
+    @JsonIgnore
     private Imovel imovel;
 
     private Manutencao(){}
@@ -60,6 +62,14 @@ public class Manutencao {
         this.dataRealizacao = dataRealizacao;
     }
 
+    public Imovel getImovel() {
+        return imovel;
+    }
+
+    public void setImovel(Imovel imovel) {
+        this.imovel = imovel;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Manutencao that)) return false;
@@ -70,4 +80,5 @@ public class Manutencao {
     public int hashCode() {
         return Objects.hashCode(id);
     }
+
 }

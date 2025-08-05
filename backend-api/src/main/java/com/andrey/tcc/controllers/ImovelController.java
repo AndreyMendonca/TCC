@@ -1,6 +1,7 @@
 package com.andrey.tcc.controllers;
 
 import com.andrey.tcc.controllers.DTOS.ImovelRequestDTO;
+import com.andrey.tcc.controllers.DTOS.ManutencaoDTO;
 import com.andrey.tcc.entities.Imovel;
 import com.andrey.tcc.services.ImovelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,21 @@ public class ImovelController {
     @PutMapping("/{id}")
     public void update(@PathVariable Long id, @RequestBody ImovelRequestDTO dto){
         service.update(id, dto);
+    }
+
+    @PostMapping("/{id}/manutencoes")
+    public Imovel addManutencao(@PathVariable Long id, @RequestBody ManutencaoDTO dto){
+        return service.addManutencao(id, dto);
+    }
+
+    @PutMapping("/{id}/manutencoes/{idManutencao}")
+    public Imovel updateManutencao(@PathVariable Long id, @PathVariable Long idManutencao,  @RequestBody ManutencaoDTO dto){
+        return service.updateManutencao(id, idManutencao, dto);
+    }
+
+    @DeleteMapping("/{id}/manutencoes/{idManutencao}")
+    public void deleteManutencao(@PathVariable Long id, @PathVariable Long idManutencao,  @RequestBody ManutencaoDTO dto){
+         service.deleteManutencao(id, idManutencao);
     }
 
 }

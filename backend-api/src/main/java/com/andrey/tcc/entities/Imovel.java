@@ -39,7 +39,7 @@ public class Imovel {
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "imovel")
+    @OneToMany(mappedBy = "imovel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Manutencao> manutencoes = new ArrayList<>();
 
     @OneToMany(mappedBy = "imovel")
