@@ -2,10 +2,52 @@
 import { Template } from "@/components/template/template"
 import { BreadcrumbRoute } from "@/types/breadcrumb-routes";
 import { useParams } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { CalendarIcon } from "lucide-react";
+import { useState } from "react";
+import { Calendar } from "@/components/ui/calendar";
+import { Label } from "@/components/ui/label";
+
+
+const formSchema = z.object({
+    nome: z.string().optional(),
+    sobrenome: z.string().optional(),
+    cpf: z.string().optional(),
+    email: z.string().optional(),
+    dataNascimento: z.date().optional(),
+    profissao: z.string().optional(),
+    tipoPessoa: z.string().optional(),
+    ativo: z.string().optional(),
+    cep: z.string().optional(),
+    logradouro: z.string().optional(),
+    numero: z.string().optional(),
+    bairro: z.string().optional(),
+    localidade: z.string().optional(),
+    uf: z.string().optional()
+})
 
 const formularioPessoasPage = () => {
     const params = useParams();
     const queryId = params.id as string;
+    const [modalCalendario, setModalCalendario] = useState(false)
+
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {}
+    })
+
+    const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        console.log(values);
+    }
+
 
     const breadcrumb: BreadcrumbRoute[] = [
         {
@@ -20,7 +62,301 @@ const formularioPessoasPage = () => {
 
     return (
         <Template route={breadcrumb}>
-            <p>formulario</p>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Cadastrar nova pessoa</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="grid grid-cols-1 md:grid-cols-2 gap-2" noValidate>
+                            <div className="border-2 rounded-md flex-1 pb-4 space-y-2">
+                                <div className="bg-muted/50 p-2 font-semibold">
+                                    <p>Informações da Pessoa</p>
+                                </div>
+                                <div className="flex gap-3 px-4">
+                                    <FormField
+                                        control={form.control}
+                                        name="nome"
+                                        render={({ field }) => (
+                                            <FormItem className="flex-1">
+                                                <FormLabel>Nome *</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        autoFocus
+                                                        placeholder="Digite o nome"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="sobrenome"
+                                        render={({ field }) => (
+                                            <FormItem className="flex-1">
+                                                <FormLabel>Sobrenome *</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        autoFocus
+                                                        placeholder="Digite o sobrenome"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div className="flex gap-3 px-4">
+                                    <FormField
+                                        control={form.control}
+                                        name="nome"
+                                        render={({ field }) => (
+                                            <FormItem className="flex-1">
+                                                <FormLabel>CPF *</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        autoFocus
+                                                        placeholder="Digite o CPF"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="dataNascimento"
+                                        render={({ field }) => (
+                                            <FormItem className="flex-1">
+                                                <FormLabel>Data de nascimento</FormLabel>
+                                                <Popover open={modalCalendario} onOpenChange={setModalCalendario}>
+                                                    <PopoverTrigger asChild>
+                                                        <FormControl>
+                                                            <Button
+                                                                variant={"outline"}
+                                                                className={cn(
+                                                                    "pl-3 text-left font-normal",
+                                                                    !field.value && "text-muted-foreground"
+                                                                )}
+                                                            >
+                                                                {field.value ? (
+                                                                    field.value.toLocaleDateString()
+                                                                ) : (
+                                                                    <span>Selecione a data</span>
+                                                                )}
+                                                                <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                                            </Button>
+                                                        </FormControl>
+                                                    </PopoverTrigger>
+                                                    <PopoverContent className="w-auto p-0" align="start">
+                                                        <Calendar
+                                                            mode="single"
+                                                            selected={field.value}
+                                                            onSelect={(date) => {
+                                                                field.onChange(date);
+                                                                setModalCalendario(false);
+                                                            }}
+                                                            disabled={(date) =>
+                                                                date > new Date() || date < new Date("1900-01-01")
+                                                            }
+                                                            captionLayout="dropdown"
+                                                        />
+                                                    </PopoverContent>
+                                                </Popover>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div className="flex gap-3 px-4">
+                                    <FormField
+                                        control={form.control}
+                                        name="email"
+                                        render={({ field }) => (
+                                            <FormItem className="flex-1">
+                                                <FormLabel>Email *</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        autoFocus
+                                                        placeholder="Digite o email"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            <div className="border-2 rounded-md flex-1 pb-4 space-y-2">
+                                <div className="bg-muted/50 p-2 font-semibold">
+                                    <p>Endereço</p>
+                                </div>
+                                <div className="flex gap-3 px-4">
+                                    <FormField
+                                        control={form.control}
+                                        name="cep"
+                                        render={({ field }) => (
+                                            <FormItem className="flex-1">
+                                                <FormLabel>CEP *</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        autoFocus
+                                                        placeholder="Digite o nome"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="numero"
+                                        render={({ field }) => (
+                                            <FormItem className="flex-1">
+                                                <FormLabel>Numero *</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        autoFocus
+                                                        placeholder="Digite o sobrenome"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div className="flex gap-3 px-4">
+                                    <FormField
+                                        control={form.control}
+                                        name="logradouro"
+                                        render={({ field }) => (
+                                            <FormItem className="flex-1">
+                                                <FormLabel>Endereço *</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        autoFocus
+                                                        placeholder="Digite o sobrenome"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div className="flex gap-3 px-4">
+                                    <FormField
+                                        control={form.control}
+                                        name="localidade"
+                                        render={({ field }) => (
+                                            <FormItem className="flex-1">
+                                                <FormLabel>Cidade *</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        autoFocus
+                                                        placeholder="Digite o sobrenome"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="uf"
+                                        render={({ field }) => (
+                                            <FormItem className="flex-1">
+                                                <FormLabel>UF *</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        autoFocus
+                                                        placeholder="Digite o sobrenome"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                            </div>
+                            <div className="col-span-2 border-2 rounded-md flex-1 pb-4 space-y-2">
+                                <div className="bg-muted/50 p-2 font-semibold">
+                                    <p>Dados Adicionais</p>
+                                </div>
+                                <div className="flex gap-3 px-4">
+                                    <FormField
+                                        control={form.control}
+                                        name="profissao"
+                                        render={({ field }) => (
+                                            <FormItem className="flex-1">
+                                                <FormLabel>Profissão *</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        autoFocus
+                                                        placeholder="Digite o profissão"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="tipoPessoa"
+                                        render={({ field }) => (
+                                            <FormItem className="flex-1">
+                                                <FormLabel>Tipo de pessoa *</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        autoFocus
+                                                        placeholder="Digite o tipo de pessoa"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                    <FormField
+                                        control={form.control}
+                                        name="ativo"
+                                        render={({ field }) => (
+                                            <FormItem className="flex-1">
+                                                <FormLabel>Ativo *</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        autoFocus
+                                                        placeholder="Digite o ativo"
+                                                        {...field}
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </div>
+                                <div className="grid w-full max-w-sm items-center gap-3 p-4">
+                                    <Label htmlFor="picture">Foto de perfil</Label>
+                                    <Input id="picture" type="file" />
+                                </div>
+
+
+                            </div>
+
+                        </form>
+                    </Form>
+                </CardContent>
+            </Card>
         </Template>
     )
 }
