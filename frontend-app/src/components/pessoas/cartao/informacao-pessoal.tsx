@@ -3,14 +3,14 @@ import { Separator } from "@/components/ui/separator"
 import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
 import { AtSign, CalendarDays, IdCard, IdCardLanyard, MapPinHouse, Phone, Pin, ScanFace } from "lucide-react"
 
-export const InformacaoPessoas = () => {
+export const InformacaoPessoal = () => {
     return (
-        <div className="border-2 w-1/2 rounded-md">
+        <div className="border-2 rounded-md w-full">
             <div>
                 <div className="bg-muted/50 p-2 font-semibold">
                     <p>Informações da Pessoa</p>
                 </div>
-                <div className="flex">
+                <div className="sm:flex">
                     <div>
                         <Avatar className="h-24 w-24 m-4 border">
                             <AvatarImage src="https://github.com/shadcn.png" />
@@ -31,11 +31,10 @@ export const InformacaoPessoas = () => {
                         </p>
                         <p className="flex gap-2 items-center">
                             <AtSign size={16} />
-                            andrey.mmendonca@gmail.com
+                            <span className="truncate">andrey.mmendonca@gmail.com</span>
                         </p>
                     </div>
                 </div>
-
             </div>
             <Separator />
             <div>
