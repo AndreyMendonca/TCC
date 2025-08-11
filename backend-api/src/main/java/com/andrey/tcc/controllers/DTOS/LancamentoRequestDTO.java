@@ -1,75 +1,39 @@
-package com.andrey.tcc.entities;
+package com.andrey.tcc.controllers.DTOS;
 
 import com.andrey.tcc.entities.enums.TipoLancamentoEnum;
-import jakarta.persistence.*;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "tb_lancamento")
-public class Lancamento {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class LancamentoRequestDTO {
+
     private String identificacao;
     private String descricaco;
     @Enumerated(EnumType.STRING)
     private TipoLancamentoEnum tipoLancamento;
     private BigDecimal valorTotal;
-    private BigDecimal valorParcela;
     private Integer numeroParcelas;
-    private Integer parcelaAtual;
     private LocalDate dataLancamento;
     private LocalDate dataVencimento;
     private LocalDate dataExecutado;
     private Boolean statusLancamento;
     private Character realizadoPorQuem;
-    private Long idFamilia;
 
-    @ManyToOne
-    @JoinColumn(name = "imovel_id")
-    private Imovel imovel;
+    public LancamentoRequestDTO(){}
 
-    public Lancamento(){}
-
-    public Lancamento(LocalDate dataExecutado, LocalDate dataLancamento, LocalDate dataVencimento, String descricaco, Long id, String identificacao, Long idFamilia, Imovel imovel, Integer numeroParcelas, Integer parcelaAtual, Character realizadoPorQuem, Boolean statusLancamento, TipoLancamentoEnum tipoLancamento, BigDecimal valorParcela, BigDecimal valorTotal) {
+    public LancamentoRequestDTO(LocalDate dataExecutado, LocalDate dataLancamento, LocalDate dataVencimento, String descricaco, String identificacao, Integer numeroParcelas, Character realizadoPorQuem, Boolean statusLancamento, TipoLancamentoEnum tipoLancamento, BigDecimal valorTotal) {
         this.dataExecutado = dataExecutado;
         this.dataLancamento = dataLancamento;
         this.dataVencimento = dataVencimento;
         this.descricaco = descricaco;
-        this.id = id;
         this.identificacao = identificacao;
-        this.idFamilia = idFamilia;
-        this.imovel = imovel;
         this.numeroParcelas = numeroParcelas;
-        this.parcelaAtual = parcelaAtual;
         this.realizadoPorQuem = realizadoPorQuem;
         this.statusLancamento = statusLancamento;
         this.tipoLancamento = tipoLancamento;
-        this.valorParcela = valorParcela;
         this.valorTotal = valorTotal;
-    }
-
-    @PrePersist
-    public void prePersist() {
-        setDataLancamento(LocalDate.now());
-    }
-
-    public LocalDate getDataLancamento() {
-        return dataLancamento;
-    }
-
-    public void setDataLancamento(LocalDate dataLancamento) {
-        this.dataLancamento = dataLancamento;
-    }
-
-    public LocalDate getDataVencimento() {
-        return dataVencimento;
-    }
-
-    public void setDataVencimento(LocalDate dataVencimento) {
-        this.dataVencimento = dataVencimento;
     }
 
     public LocalDate getDataExecutado() {
@@ -80,20 +44,20 @@ public class Lancamento {
         this.dataExecutado = dataExecutado;
     }
 
+    public LocalDate getDataVencimento() {
+        return dataVencimento;
+    }
+
+    public void setDataVencimento(LocalDate dataVencimento) {
+        this.dataVencimento = dataVencimento;
+    }
+
     public String getDescricaco() {
         return descricaco;
     }
 
     public void setDescricaco(String descricaco) {
         this.descricaco = descricaco;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getIdentificacao() {
@@ -104,36 +68,12 @@ public class Lancamento {
         this.identificacao = identificacao;
     }
 
-    public Long getIdFamilia() {
-        return idFamilia;
-    }
-
-    public void setIdFamilia(Long idFamilia) {
-        this.idFamilia = idFamilia;
-    }
-
-    public Imovel getImovel() {
-        return imovel;
-    }
-
-    public void setImovel(Imovel imovel) {
-        this.imovel = imovel;
-    }
-
     public Integer getNumeroParcelas() {
         return numeroParcelas;
     }
 
     public void setNumeroParcelas(Integer numeroParcelas) {
         this.numeroParcelas = numeroParcelas;
-    }
-
-    public Integer getParcelaAtual() {
-        return parcelaAtual;
-    }
-
-    public void setParcelaAtual(Integer parcelaAtual) {
-        this.parcelaAtual = parcelaAtual;
     }
 
     public Character getRealizadoPorQuem() {
@@ -160,19 +100,19 @@ public class Lancamento {
         this.tipoLancamento = tipoLancamento;
     }
 
-    public BigDecimal getValorParcela() {
-        return valorParcela;
-    }
-
-    public void setValorParcela(BigDecimal valorParcela) {
-        this.valorParcela = valorParcela;
-    }
-
     public BigDecimal getValorTotal() {
         return valorTotal;
     }
 
     public void setValorTotal(BigDecimal valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    public LocalDate getDataLancamento() {
+        return dataLancamento;
+    }
+
+    public void setDataLancamento(LocalDate dataLancamento) {
+        this.dataLancamento = dataLancamento;
     }
 }
