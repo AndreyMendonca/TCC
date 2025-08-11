@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
@@ -15,6 +15,12 @@ import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import Component from "@/components/input-foto-perfil";
+import FotoPerfil from "@/components/input-foto-perfil";
+import InputFotoPerfil from "@/components/input-foto-perfil";
+import InputUploadArquivos from "@/components/input-upload-arquivos";
 
 
 const formSchema = z.object({
@@ -25,7 +31,7 @@ const formSchema = z.object({
     dataNascimento: z.date().optional(),
     profissao: z.string().optional(),
     tipoPessoa: z.string().optional(),
-    ativo: z.string().optional(),
+    ativo: z.boolean().optional(),
     cep: z.string().optional(),
     logradouro: z.string().optional(),
     numero: z.string().optional(),
@@ -41,7 +47,9 @@ const formularioPessoasPage = () => {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: {}
+        defaultValues: {
+            ativo: true,
+        }
     })
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
@@ -64,7 +72,9 @@ const formularioPessoasPage = () => {
         <Template route={breadcrumb}>
             <Card>
                 <CardHeader>
-                    <CardTitle>Cadastrar nova pessoa</CardTitle>
+                    <CardTitle>
+                        Cadastrar nova pessoa
+                    </CardTitle>
                 </CardHeader>
                 <CardContent>
                     <Form {...form}>
@@ -288,11 +298,12 @@ const formularioPessoasPage = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="col-span-2 border-2 rounded-md flex-1 pb-4 space-y-2">
+                            <div className="border-2 rounded-md flex-1 pb-4 space-y-2 max-h-80">
                                 <div className="bg-muted/50 p-2 font-semibold">
                                     <p>Dados Adicionais</p>
                                 </div>
-                                <div className="flex gap-3 px-4">
+                                <div className="flex flex-col gap-3 px-4">
+                                    <InputFotoPerfil />
                                     <FormField
                                         control={form.control}
                                         name="profissao"
@@ -310,49 +321,61 @@ const formularioPessoasPage = () => {
                                             </FormItem>
                                         )}
                                     />
-                                    <FormField
-                                        control={form.control}
-                                        name="tipoPessoa"
-                                        render={({ field }) => (
-                                            <FormItem className="flex-1">
-                                                <FormLabel>Tipo de pessoa *</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        autoFocus
-                                                        placeholder="Digite o tipo de pessoa"
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="ativo"
-                                        render={({ field }) => (
-                                            <FormItem className="flex-1">
-                                                <FormLabel>Ativo *</FormLabel>
-                                                <FormControl>
-                                                    <Input
-                                                        autoFocus
-                                                        placeholder="Digite o ativo"
-                                                        {...field}
-                                                    />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
-                                    />
+                                    <div className="flex gap-3">
+                                        <FormField
+                                            control={form.control}
+                                            name="tipoPessoa"
+                                            render={({ field }) => (
+                                                <FormItem className="w-[50%]">
+                                                    <FormLabel>Tipo de pessoa *</FormLabel>
+                                                    <FormControl>
+                                                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                                            <SelectTrigger className="w-full">
+                                                                <SelectValue placeholder="Selecione o tipo de pessoa" />
+                                                            </SelectTrigger>
+                                                            <SelectContent >
+                                                                <SelectGroup>
+                                                                    <SelectLabel>Tipo</SelectLabel>
+                                                                    <SelectItem value="inquilino">Inquilino</SelectItem>
+                                                                    <SelectItem value="fiador">Fiador</SelectItem>
+                                                                </SelectGroup>
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="ativo"
+                                            render={({ field }) => (
+                                                <FormItem >
+                                                    <FormLabel>Status</FormLabel>
+                                                    <div className="flex gap-4">
+                                                        <FormControl>
+                                                            <Switch
+                                                                checked={field.value}
+                                                                onCheckedChange={field.onChange}
+                                                            />
+                                                        </FormControl>
+                                                        <FormDescription>{field.value ? "Ativo" : "Inativo"}</FormDescription>
+                                                    </div>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                    </div>
                                 </div>
-                                <div className="grid w-full max-w-sm items-center gap-3 p-4">
-                                    <Label htmlFor="picture">Foto de perfil</Label>
-                                    <Input id="picture" type="file" />
-                                </div>
-
-
                             </div>
-
+                            <div className="border-2 rounded-md flex-1 pb-4 space-y-2">
+                                <div className="bg-muted/50 p-2 font-semibold">
+                                    <p>Documentos</p>
+                                </div>
+                                <div className="flex gap-3 px-4">
+                                    <InputUploadArquivos />
+                                </div>
+                            </div>
                         </form>
                     </Form>
                 </CardContent>
