@@ -4,6 +4,7 @@ import com.andrey.tcc.entities.enums.TipoPessoaEnum;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,6 +26,12 @@ public class Pessoa {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
+
+    @OneToMany(mappedBy = "locador")
+    private List<Locacao> locacoesComoLocador;
+
+    @OneToMany(mappedBy = "fiador")
+    private List<Locacao> locacoesComoFiador;
 
     public Pessoa(){}
 

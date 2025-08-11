@@ -22,6 +22,14 @@ public class Locacao {
     @JoinColumn(name = "aluguel_id")
     private Aluguel aluguel;
 
+    @ManyToOne
+    @JoinColumn(name = "pessoa_locador_id")
+    private Pessoa locador;
+
+    @ManyToOne
+    @JoinColumn(name = "pessoa_fiador_id")
+    private Pessoa fiador;
+
     public Locacao(){}
 
     public Locacao(Long id, String identificacao, LocalDate inicioAluguel, LocalDate fimAluguel, Integer diaDoPagamento, BigDecimal caucao, BigDecimal valorPrePagos) {
