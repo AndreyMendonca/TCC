@@ -8,16 +8,16 @@ const Page = () => {
 
     const breadcrumb: BreadcrumbRoute[] = [
         {
-            nome: "Imóveis",
-            rota: "/imoveis"
+            nome: "Aluguéis",
+            rota: "/alugueis"
         }
     ]
 
     return (
         <Template route={breadcrumb}>
             <Button variant="outline" asChild>
-                <Link href="/imoveis/formulario/0">
-                    <span className="flex items-center gap-2"><PlusIcon /> Cadastrar novo imóvel</span>
+                <Link href="/alugueis/formulario/0">
+                    <span className="flex items-center gap-2"><PlusIcon /> Cadastrar novo aluguel</span>
                 </Link>
             </Button>
         </Template>

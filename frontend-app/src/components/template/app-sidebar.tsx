@@ -45,12 +45,12 @@ const data = {
         },
         {
             title: "Aluguéis",
-            url: "#",
+            url: "/alugueis",
             icon: MapPinHouse
         },
         {
             title: "Financeiro",
-            url: "#",
+            url: "financeiro",
             icon: WalletMinimal,
         },
         {

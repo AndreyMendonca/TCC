@@ -92,7 +92,6 @@ const formularioPessoasPage = () => {
                                                 <FormLabel>Nome *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        autoFocus
                                                         placeholder="Digite o nome"
                                                         {...field}
                                                     />
@@ -109,7 +108,6 @@ const formularioPessoasPage = () => {
                                                 <FormLabel>Sobrenome *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        autoFocus
                                                         placeholder="Digite o sobrenome"
                                                         {...field}
                                                     />
@@ -128,7 +126,6 @@ const formularioPessoasPage = () => {
                                                 <FormLabel>CPF *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        autoFocus
                                                         placeholder="Digite o CPF"
                                                         {...field}
                                                     />
@@ -191,7 +188,6 @@ const formularioPessoasPage = () => {
                                                 <FormLabel>Email *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        autoFocus
                                                         placeholder="Digite o email"
                                                         {...field}
                                                     />
@@ -215,7 +211,6 @@ const formularioPessoasPage = () => {
                                                 <FormLabel>CEP *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        autoFocus
                                                         placeholder="Digite o nome"
                                                         {...field}
                                                     />
@@ -232,7 +227,6 @@ const formularioPessoasPage = () => {
                                                 <FormLabel>Numero *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        autoFocus
                                                         placeholder="Digite o sobrenome"
                                                         {...field}
                                                     />
@@ -251,7 +245,6 @@ const formularioPessoasPage = () => {
                                                 <FormLabel>Endereço *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        autoFocus
                                                         placeholder="Digite o sobrenome"
                                                         {...field}
                                                     />
@@ -270,7 +263,6 @@ const formularioPessoasPage = () => {
                                                 <FormLabel>Cidade *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        autoFocus
                                                         placeholder="Digite o sobrenome"
                                                         {...field}
                                                     />
@@ -287,7 +279,6 @@ const formularioPessoasPage = () => {
                                                 <FormLabel>UF *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        autoFocus
                                                         placeholder="Digite o sobrenome"
                                                         {...field}
                                                     />
@@ -312,7 +303,6 @@ const formularioPessoasPage = () => {
                                                 <FormLabel>Profissão *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        autoFocus
                                                         placeholder="Digite o profissão"
                                                         {...field}
                                                     />
