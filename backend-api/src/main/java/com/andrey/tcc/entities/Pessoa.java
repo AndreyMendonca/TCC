@@ -4,6 +4,7 @@ import com.andrey.tcc.entities.enums.TipoPessoaEnum;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,6 +33,15 @@ public class Pessoa {
 
     @OneToMany(mappedBy = "fiador")
     private List<Aluguel> locacoesComoFiador;
+
+    @OneToOne
+    @JoinColumn(name = "imagem_perfil_id")
+    private Arquivo imagemPerfil;
+
+    // Lista de arquivos (1:N)
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Arquivo> arquivos = new ArrayList<>();
+
 
     public Pessoa(){}
 
@@ -126,6 +136,19 @@ public class Pessoa {
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }
+
+    public Arquivo getImagemPerfil() {
+        return imagemPerfil;
+    }
+
+    public void setImagemPerfil(Arquivo imagemPerfil) {
+        this.imagemPerfil = imagemPerfil;
+    }
+
+    public List<Arquivo> getArquivos() {
+        return arquivos;
+    }
+
 
     @Override
     public boolean equals(Object o) {
