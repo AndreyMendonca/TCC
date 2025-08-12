@@ -50,7 +50,7 @@ const data = {
         },
         {
             title: "Financeiro",
-            url: "financeiro",
+            url: "/financeiro",
             icon: WalletMinimal,
         },
         {

@@ -16,7 +16,7 @@ const Page = () => {
     return (
         <Template route={breadcrumb}>
             <Button variant="outline" asChild>
-                <Link href="/alugueis/formulario/0">
+                <Link href="/financeiro/formulario/0">
                     <span className="flex items-center gap-2"><PlusIcon /> Cadastrar novo Lançamento</span>
                 </Link>
             </Button>

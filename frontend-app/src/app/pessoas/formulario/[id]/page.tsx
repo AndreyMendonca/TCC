@@ -14,11 +14,8 @@ import { cn } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
-import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import Component from "@/components/input-foto-perfil";
-import FotoPerfil from "@/components/input-foto-perfil";
 import InputFotoPerfil from "@/components/input-foto-perfil";
 import InputUploadArquivos from "@/components/input-upload-arquivos";
 
