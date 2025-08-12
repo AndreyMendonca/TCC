@@ -1,7 +1,6 @@
 package com.andrey.tcc.entities;
 
 import jakarta.persistence.*;
-import org.springframework.cglib.core.Local;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class Imovel {
 
     @OneToOne
     @JoinColumn(name = "locacao_id")
-    private Locacao locacao;
+    private Aluguel aluguel;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id")
@@ -47,7 +46,7 @@ public class Imovel {
 
     public Imovel(){}
 
-    public Imovel(BigDecimal aream2Util, BigDecimal areametrosquadrados, Integer banheiros, String descricao, Endereco endereco, Long id, String identificacao, Boolean imovelMobiliado, String link, Locacao locacao, Integer numeroQuartos, Boolean permiteAnimais, Boolean permiteFumar, String regrasDaCasa, Integer suite, TipoImovel tipoImovel, Integer vagasCarros) {
+    public Imovel(BigDecimal aream2Util, BigDecimal areametrosquadrados, Integer banheiros, String descricao, Endereco endereco, Long id, String identificacao, Boolean imovelMobiliado, String link, Aluguel aluguel, Integer numeroQuartos, Boolean permiteAnimais, Boolean permiteFumar, String regrasDaCasa, Integer suite, TipoImovel tipoImovel, Integer vagasCarros) {
         this.aream2Util = aream2Util;
         this.areametrosquadrados = areametrosquadrados;
         this.banheiros = banheiros;
@@ -57,7 +56,7 @@ public class Imovel {
         this.identificacao = identificacao;
         this.imovelMobiliado = imovelMobiliado;
         this.link = link;
-        this.locacao = locacao;
+        this.aluguel = aluguel;
         this.numeroQuartos = numeroQuartos;
         this.permiteAnimais = permiteAnimais;
         this.permiteFumar = permiteFumar;
@@ -107,8 +106,8 @@ public class Imovel {
         return link;
     }
 
-    public Locacao getLocacao() {
-        return locacao;
+    public Aluguel getLocacao() {
+        return aluguel;
     }
 
     public List<Manutencao> getManutencoes() {
@@ -179,8 +178,8 @@ public class Imovel {
         this.link = link;
     }
 
-    public void setLocacao(Locacao locacao) {
-        this.locacao = locacao;
+    public void setLocacao(Aluguel aluguel) {
+        this.aluguel = aluguel;
     }
 
     public void setNumeroQuartos(Integer numeroQuartos) {

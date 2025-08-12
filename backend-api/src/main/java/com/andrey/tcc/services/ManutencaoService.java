@@ -2,6 +2,7 @@ package com.andrey.tcc.services;
 
 import com.andrey.tcc.config.mapper.Mapper;
 import com.andrey.tcc.entities.Manutencao;
+import com.andrey.tcc.exceptions.ResourceNotFoundException;
 import com.andrey.tcc.repositories.ManutencaoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class ManutencaoService {
     }
 
     public Manutencao findById(Long id){
-        Manutencao manutencao = repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Manutencao não encontrado"));
+        Manutencao manutencao = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Manutencao não encontrado"));
         return Mapper.parseObject(manutencao, Manutencao.class);
     }
 

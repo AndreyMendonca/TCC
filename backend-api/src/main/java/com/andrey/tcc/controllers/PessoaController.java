@@ -3,6 +3,7 @@ package com.andrey.tcc.controllers;
 import com.andrey.tcc.entities.Pessoa;
 import com.andrey.tcc.services.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class PessoaController {
     private PessoaService service;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public void save(@RequestBody Pessoa pessoa){
         service.save(pessoa);
     }

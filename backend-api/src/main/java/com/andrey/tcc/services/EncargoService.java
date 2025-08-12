@@ -3,6 +3,7 @@ package com.andrey.tcc.services;
 import com.andrey.tcc.config.mapper.Mapper;
 import com.andrey.tcc.controllers.DTOS.EncargoDTO;
 import com.andrey.tcc.entities.Encargo;
+import com.andrey.tcc.exceptions.ResourceNotFoundException;
 import com.andrey.tcc.repositories.EncargoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ public class EncargoService {
     }
 
     public EncargoDTO findById(Long id){
-        Encargo encargo = repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Encarco não encontrado"));
+        Encargo encargo = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Encarco não encontrado"));
         return Mapper.parseObject(encargo, EncargoDTO.class);
     }
 

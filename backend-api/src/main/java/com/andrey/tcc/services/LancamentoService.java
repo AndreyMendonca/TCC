@@ -3,6 +3,7 @@ package com.andrey.tcc.services;
 import com.andrey.tcc.config.mapper.Mapper;
 import com.andrey.tcc.controllers.DTOS.LancamentoRequestDTO;
 import com.andrey.tcc.entities.Lancamento;
+import com.andrey.tcc.exceptions.ResourceNotFoundException;
 import com.andrey.tcc.repositories.LancamentoRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
@@ -50,7 +51,7 @@ public class LancamentoService {
     }
 
     public Lancamento findById(Long id){
-        return repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Lançamento não encontrado"));
+        return repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Lançamento não encontrado"));
     }
 
     public List<Lancamento> findAll(){

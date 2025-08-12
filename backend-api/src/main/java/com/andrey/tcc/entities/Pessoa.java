@@ -28,10 +28,10 @@ public class Pessoa {
     private Endereco endereco;
 
     @OneToMany(mappedBy = "locador")
-    private List<Locacao> locacoesComoLocador;
+    private List<Aluguel> locacoesComoLocador;
 
     @OneToMany(mappedBy = "fiador")
-    private List<Locacao> locacoesComoFiador;
+    private List<Aluguel> locacoesComoFiador;
 
     public Pessoa(){}
 

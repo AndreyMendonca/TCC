@@ -1,9 +1,8 @@
 package com.andrey.tcc.services;
 
 import com.andrey.tcc.config.mapper.Mapper;
-import com.andrey.tcc.entities.Locacao;
 import com.andrey.tcc.entities.Pessoa;
-import com.andrey.tcc.entities.enums.TipoPessoaEnum;
+import com.andrey.tcc.exceptions.ResourceNotFoundException;
 import com.andrey.tcc.repositories.PessoaRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ public class PessoaService {
     }
 
     public Pessoa findById(Long id){
-        Pessoa pessoa = repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Pessoa não encontrada"));
+        Pessoa pessoa = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Pessoa não encontrada"));
         return Mapper.parseObject(pessoa, Pessoa.class);
     }
 

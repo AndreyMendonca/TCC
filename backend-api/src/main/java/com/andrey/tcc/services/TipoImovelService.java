@@ -2,6 +2,7 @@ package com.andrey.tcc.services;
 
 import com.andrey.tcc.config.mapper.Mapper;
 import com.andrey.tcc.entities.TipoImovel;
+import com.andrey.tcc.exceptions.ResourceNotFoundException;
 import com.andrey.tcc.repositories.TipoImovelRepository;
 import com.andrey.tcc.repositories.TipoImovelRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,7 +21,7 @@ public class TipoImovelService {
     }
 
     public TipoImovel findById(Long id){
-        TipoImovel tipoImovel = repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Tipo de Imovel não encontrado"));
+        TipoImovel tipoImovel = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Tipo de Imovel não encontrado"));
         return Mapper.parseObject(tipoImovel, TipoImovel.class);
     }
 

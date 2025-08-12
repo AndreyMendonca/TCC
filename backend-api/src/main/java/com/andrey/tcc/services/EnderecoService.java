@@ -2,6 +2,7 @@ package com.andrey.tcc.services;
 
 import com.andrey.tcc.config.mapper.Mapper;
 import com.andrey.tcc.entities.Endereco;
+import com.andrey.tcc.exceptions.ResourceNotFoundException;
 import com.andrey.tcc.repositories.EnderecoRepository;
 import com.andrey.tcc.repositories.EnderecoRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,7 +21,7 @@ public class EnderecoService {
     }
 
     public Endereco findById(Long id){
-        Endereco endereco = repository.findById(id).orElseThrow(()-> new EntityNotFoundException("Endereco não encontrado"));
+        Endereco endereco = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Endereco não encontrado"));
         return Mapper.parseObject(endereco, Endereco.class);
     }
 

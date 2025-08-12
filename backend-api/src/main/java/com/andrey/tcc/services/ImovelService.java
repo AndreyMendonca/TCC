@@ -7,6 +7,7 @@ import com.andrey.tcc.entities.Endereco;
 import com.andrey.tcc.entities.Imovel;
 import com.andrey.tcc.entities.Manutencao;
 import com.andrey.tcc.entities.TipoImovel;
+import com.andrey.tcc.exceptions.ResourceNotFoundException;
 import com.andrey.tcc.repositories.ImovelRepository;
 import com.andrey.tcc.repositories.TipoImovelRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -39,7 +40,7 @@ public class ImovelService {
     }
 
     public Imovel findById(Long id){
-        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Imóvel não localizado"));
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Imóvel não localizado"));
     }
 
     public List<Imovel> findAll(){
