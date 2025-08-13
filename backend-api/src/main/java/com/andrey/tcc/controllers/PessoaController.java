@@ -16,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/pessoas")
+@CrossOrigin("*")
 public class PessoaController {
     @Autowired
     private PessoaService service;

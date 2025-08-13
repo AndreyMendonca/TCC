@@ -86,7 +86,10 @@ public class PessoaService {
             dto.getArquivos().add(buildImageURL(x).toString());
         });
 
-        dto.setImagemPerfil(buildImageURL(pessoa.getImagemPerfil()).toString());
+        if(pessoa.getImagemPerfil() != null){
+            dto.setImagemPerfil(buildImageURL(pessoa.getImagemPerfil()).toString());
+        }
+
 
         return dto;
     }

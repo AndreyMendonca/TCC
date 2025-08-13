@@ -11,33 +11,42 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, MoveLeft } from "lucide-react";
 import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import InputFotoPerfil from "@/components/input-foto-perfil";
 import InputUploadArquivos from "@/components/input-upload-arquivos";
+import { PessoasService } from "@/services/pessoas";
+import { toast } from "sonner";
 
 
-const formSchema = z.object({
-    nome: z.string().optional(),
-    sobrenome: z.string().optional(),
-    cpf: z.string().optional(),
-    email: z.string().optional(),
-    dataNascimento: z.date().optional(),
-    profissao: z.string().optional(),
-    tipoPessoa: z.string().optional(),
-    ativo: z.boolean().optional(),
+export const enderecoSchema = z.object({
     cep: z.string().optional(),
     logradouro: z.string().optional(),
     numero: z.string().optional(),
     bairro: z.string().optional(),
     localidade: z.string().optional(),
-    uf: z.string().optional()
-})
+    uf: z.string().optional(),
+    pais: z.string().optional(),
+});
+
+
+export const formSchema = z.object({
+    nome: z.string().min(2, { message: "O nome deve ter no mínimo 2 caracteres." }),
+    sobrenome: z.string().min(2, { message: "O sobrenome deve ter no mínimo 2 caracteres." }),
+    cpf: z.string().optional(),
+    email: z.string().optional(),
+    dataNascimento: z.date().optional(),
+    profissao: z.string().optional(),
+    ativa: z.boolean(),
+    tipoPessoaEnum: z.string(),
+    endereco: enderecoSchema.optional(),
+});
 
 const formularioPessoasPage = () => {
+    const service = PessoasService;
     const params = useParams();
     const queryId = params.id as string;
     const [modalCalendario, setModalCalendario] = useState(false)
@@ -45,11 +54,18 @@ const formularioPessoasPage = () => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            ativo: true,
+            nome: '',
+            sobrenome: '',
+            ativa: true, 
+            tipoPessoaEnum: undefined,
         }
     })
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
+        await service.salvar(values)
+            .then(() => toast.success("Sucesso", { description: "Sucesso ao cadastrar pessoa" }))
+            .catch(() => toast.error("Erro", { description: "Erro ao cadastrar pessoa" }));
+
         console.log(values);
     }
 
@@ -67,9 +83,9 @@ const formularioPessoasPage = () => {
 
     return (
         <Template route={breadcrumb}>
-            <Card>
+            <Card className="gap-2">
                 <CardHeader>
-                    <CardTitle>
+                    <CardTitle className="mb-1 flex items-center gap-2">
                         Cadastrar nova pessoa
                     </CardTitle>
                 </CardHeader>
@@ -117,7 +133,7 @@ const formularioPessoasPage = () => {
                                 <div className="flex gap-3 px-4">
                                     <FormField
                                         control={form.control}
-                                        name="nome"
+                                        name="cpf"
                                         render={({ field }) => (
                                             <FormItem className="flex-1">
                                                 <FormLabel>CPF *</FormLabel>
@@ -202,13 +218,13 @@ const formularioPessoasPage = () => {
                                 <div className="flex gap-3 px-4">
                                     <FormField
                                         control={form.control}
-                                        name="cep"
+                                        name="endereco.cep"
                                         render={({ field }) => (
                                             <FormItem className="flex-1">
                                                 <FormLabel>CEP *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="Digite o nome"
+                                                        placeholder="Digite o CEP"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -218,13 +234,13 @@ const formularioPessoasPage = () => {
                                     />
                                     <FormField
                                         control={form.control}
-                                        name="numero"
+                                        name="endereco.numero"
                                         render={({ field }) => (
                                             <FormItem className="flex-1">
                                                 <FormLabel>Numero *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="Digite o sobrenome"
+                                                        placeholder="Digite o número"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -236,13 +252,13 @@ const formularioPessoasPage = () => {
                                 <div className="flex gap-3 px-4">
                                     <FormField
                                         control={form.control}
-                                        name="logradouro"
+                                        name="endereco.logradouro"
                                         render={({ field }) => (
                                             <FormItem className="flex-1">
                                                 <FormLabel>Endereço *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="Digite o sobrenome"
+                                                        placeholder="Digite o endereço"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -254,13 +270,13 @@ const formularioPessoasPage = () => {
                                 <div className="flex gap-3 px-4">
                                     <FormField
                                         control={form.control}
-                                        name="localidade"
+                                        name="endereco.localidade"
                                         render={({ field }) => (
                                             <FormItem className="flex-1">
                                                 <FormLabel>Cidade *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="Digite o sobrenome"
+                                                        placeholder="Digite a cidade"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -270,13 +286,13 @@ const formularioPessoasPage = () => {
                                     />
                                     <FormField
                                         control={form.control}
-                                        name="uf"
+                                        name="endereco.uf"
                                         render={({ field }) => (
                                             <FormItem className="flex-1">
                                                 <FormLabel>UF *</FormLabel>
                                                 <FormControl>
                                                     <Input
-                                                        placeholder="Digite o sobrenome"
+                                                        placeholder="Digite a UF"
                                                         {...field}
                                                     />
                                                 </FormControl>
@@ -311,7 +327,7 @@ const formularioPessoasPage = () => {
                                     <div className="flex gap-3">
                                         <FormField
                                             control={form.control}
-                                            name="tipoPessoa"
+                                            name="tipoPessoaEnum"
                                             render={({ field }) => (
                                                 <FormItem className="w-[50%]">
                                                     <FormLabel>Tipo de pessoa *</FormLabel>
@@ -335,7 +351,7 @@ const formularioPessoasPage = () => {
                                         />
                                         <FormField
                                             control={form.control}
-                                            name="ativo"
+                                            name="ativa"
                                             render={({ field }) => (
                                                 <FormItem >
                                                     <FormLabel>Status</FormLabel>
@@ -362,6 +378,9 @@ const formularioPessoasPage = () => {
                                 <div className="flex gap-3 px-4">
                                     <InputUploadArquivos />
                                 </div>
+                            </div>
+                            <div className="md:col-span-2 text-right">
+                                <Button type="submit" className="min-w-40">Cadastrar</Button>
                             </div>
                         </form>
                     </Form>
