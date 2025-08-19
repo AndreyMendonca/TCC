@@ -1,5 +1,6 @@
 package com.andrey.tcc.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -98,6 +99,7 @@ public class Imovel {
         return imovelMobiliado;
     }
 
+    @JsonIgnore
     public List<Lancamento> getLancamentos() {
         return lancamentos;
     }

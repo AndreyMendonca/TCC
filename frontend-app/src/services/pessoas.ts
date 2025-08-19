@@ -10,9 +10,9 @@ export const PessoasService = {
 
         formData.append('nome', pessoa.nome);
         formData.append('sobrenome', pessoa.sobrenome);
-        formData.append('cpf', pessoa.cpf ?? '');
-        formData.append('email', pessoa.email ?? '');
-        formData.append('profissao', pessoa.profissao ?? '');
+        formData.append('cpf', "oi");
+        formData.append('email', "oi");
+        formData.append('profissao', "oi");
         formData.append('ativa', String(pessoa.ativa));
         formData.append('tipoPessoaEnum', pessoa.tipoPessoaEnum);
         if (pessoa.dataNascimento) {
@@ -27,12 +27,9 @@ export const PessoasService = {
             formData.append('endereco.pais', pessoa.endereco.pais ?? 'oi');
         }
 
+        console.log('FormData:', formData);
 
-        const response: AxiosResponse<Pessoa> = await api.post(`${URL}/todosDados`, formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        });
+        const response: AxiosResponse<Pessoa> = await api.post(`${URL}/todosDados`, formData);
 
         return response.data;
     }

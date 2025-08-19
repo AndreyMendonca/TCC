@@ -9,39 +9,42 @@ import java.time.LocalDate;
 
 public class LancamentoRequestDTO {
 
+    private Long id;
     private String identificacao;
     private String descricaco;
-    @Enumerated(EnumType.STRING)
     private TipoLancamentoEnum tipoLancamento;
     private BigDecimal valorTotal;
     private Integer numeroParcelas;
-    private LocalDate dataLancamento;
     private LocalDate dataVencimento;
-    private LocalDate dataExecutado;
-    private Boolean statusLancamento;
-    private Character realizadoPorQuem;
+    private Long imovelId;
 
     public LancamentoRequestDTO(){}
 
-    public LancamentoRequestDTO(LocalDate dataExecutado, LocalDate dataLancamento, LocalDate dataVencimento, String descricaco, String identificacao, Integer numeroParcelas, Character realizadoPorQuem, Boolean statusLancamento, TipoLancamentoEnum tipoLancamento, BigDecimal valorTotal) {
-        this.dataExecutado = dataExecutado;
-        this.dataLancamento = dataLancamento;
+    public LancamentoRequestDTO(Long id, LocalDate dataVencimento, String descricaco, String identificacao, Long idImovel, Integer numeroParcelas, TipoLancamentoEnum tipoLancamento, BigDecimal valorTotal) {
+        this.id = id;
         this.dataVencimento = dataVencimento;
         this.descricaco = descricaco;
         this.identificacao = identificacao;
+        this.imovelId = idImovel;
         this.numeroParcelas = numeroParcelas;
-        this.realizadoPorQuem = realizadoPorQuem;
-        this.statusLancamento = statusLancamento;
         this.tipoLancamento = tipoLancamento;
         this.valorTotal = valorTotal;
     }
 
-    public LocalDate getDataExecutado() {
-        return dataExecutado;
+    public Long getId() {
+        return id;
     }
 
-    public void setDataExecutado(LocalDate dataExecutado) {
-        this.dataExecutado = dataExecutado;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getImovelId() {
+        return imovelId;
+    }
+
+    public void setImovelId(Long imovelId) {
+        this.imovelId = imovelId;
     }
 
     public LocalDate getDataVencimento() {
@@ -76,22 +79,6 @@ public class LancamentoRequestDTO {
         this.numeroParcelas = numeroParcelas;
     }
 
-    public Character getRealizadoPorQuem() {
-        return realizadoPorQuem;
-    }
-
-    public void setRealizadoPorQuem(Character realizadoPorQuem) {
-        this.realizadoPorQuem = realizadoPorQuem;
-    }
-
-    public Boolean getStatusLancamento() {
-        return statusLancamento;
-    }
-
-    public void setStatusLancamento(Boolean statusLancamento) {
-        this.statusLancamento = statusLancamento;
-    }
-
     public TipoLancamentoEnum getTipoLancamento() {
         return tipoLancamento;
     }
@@ -108,11 +95,4 @@ public class LancamentoRequestDTO {
         this.valorTotal = valorTotal;
     }
 
-    public LocalDate getDataLancamento() {
-        return dataLancamento;
-    }
-
-    public void setDataLancamento(LocalDate dataLancamento) {
-        this.dataLancamento = dataLancamento;
-    }
 }
