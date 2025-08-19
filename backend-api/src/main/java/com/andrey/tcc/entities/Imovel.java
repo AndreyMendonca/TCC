@@ -32,7 +32,7 @@ public class Imovel {
     private TipoImovel tipoImovel;
 
     @OneToOne
-    @JoinColumn(name = "locacao_id")
+    @JoinColumn(name = "aluguel_id")
     private Aluguel aluguel;
 
     @OneToOne(cascade = CascadeType.ALL)

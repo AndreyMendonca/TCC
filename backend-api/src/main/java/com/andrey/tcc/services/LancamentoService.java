@@ -1,6 +1,7 @@
 package com.andrey.tcc.services;
 
 import com.andrey.tcc.config.mapper.Mapper;
+import com.andrey.tcc.controllers.DTOS.LancamentoPagoRequestDTO;
 import com.andrey.tcc.controllers.DTOS.LancamentoRequestDTO;
 import com.andrey.tcc.entities.Imovel;
 import com.andrey.tcc.entities.Lancamento;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,9 +55,8 @@ public class LancamentoService {
                 parcela.setImovel(imovel);
                 lancamentos.add(parcela);
             }
-            repository.saveAll(lancamentos);
         }
-        return lancamentos;
+        return repository.saveAll(lancamentos);
     }
 
     public Lancamento findById(Long id){
@@ -69,6 +70,14 @@ public class LancamentoService {
     public Lancamento update(Long id, Lancamento lancamento){
         this.findById(id);
         lancamento.setId(id);
+        return repository.save(lancamento);
+    }
+
+    public Lancamento updatePago(Long id, LancamentoPagoRequestDTO dto) {
+        Lancamento lancamento = this.findById(id);
+        lancamento.setDataExecutado( LocalDate.now());
+        lancamento.setStatusLancamento(true);
+        lancamento.setRealizadoPorQuem(dto.getRealizadoPorQuem());
         return repository.save(lancamento);
     }
 }

@@ -19,29 +19,37 @@ public class Aluguel {
     private Integer diaDoPagamento;
     private BigDecimal caucao;
     private BigDecimal valorPrePagos;
+    private BigDecimal valor;
+    private Boolean ativo;
 
     @ManyToOne
-    @JoinColumn(name = "pessoa_locador_id")
-    private Pessoa locador;
+    @JoinColumn(name = "pessoa_inquilino_id")
+    private Pessoa inquilino;
 
     @ManyToOne
     @JoinColumn(name = "pessoa_fiador_id")
     private Pessoa fiador;
 
-    @OneToMany(mappedBy = "aluguel")
+    @OneToMany(mappedBy = "aluguel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Encargo> encargos = new ArrayList<>();
+
+    @OneToOne(mappedBy = "aluguel")
+    private Imovel imovel;
 
     public Aluguel(){}
 
-    public Aluguel(BigDecimal caucao, Integer diaDoPagamento, Pessoa fiador, LocalDate fimAluguel, Long id, String identificacao, LocalDate inicioAluguel, Pessoa locador, BigDecimal valorPrePagos) {
+    public Aluguel(Boolean ativo, BigDecimal caucao, Integer diaDoPagamento, Pessoa fiador, LocalDate fimAluguel, Long id, String identificacao, Imovel imovel, LocalDate inicioAluguel, Pessoa inquilino, BigDecimal valor, BigDecimal valorPrePagos) {
+        this.ativo = ativo;
         this.caucao = caucao;
         this.diaDoPagamento = diaDoPagamento;
         this.fiador = fiador;
         this.fimAluguel = fimAluguel;
         this.id = id;
         this.identificacao = identificacao;
+        this.imovel = imovel;
         this.inicioAluguel = inicioAluguel;
-        this.locador = locador;
+        this.inquilino = inquilino;
+        this.valor = valor;
         this.valorPrePagos = valorPrePagos;
     }
 
@@ -113,11 +121,35 @@ public class Aluguel {
         this.fiador = fiador;
     }
 
-    public Pessoa getLocador() {
-        return locador;
+    public Boolean getAtivo() {
+        return ativo;
     }
 
-    public void setLocador(Pessoa locador) {
-        this.locador = locador;
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
+    }
+
+    public BigDecimal getValor() {
+        return valor;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
+    }
+
+    public Imovel getImovel() {
+        return imovel;
+    }
+
+    public void setImovel(Imovel imovel) {
+        this.imovel = imovel;
+    }
+
+    public Pessoa getInquilino() {
+        return inquilino;
+    }
+
+    public void setInquilino(Pessoa inquilino) {
+        this.inquilino = inquilino;
     }
 }

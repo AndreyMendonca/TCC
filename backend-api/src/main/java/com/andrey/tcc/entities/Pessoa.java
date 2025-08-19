@@ -28,8 +28,8 @@ public class Pessoa {
     @JoinColumn(name = "endereco_id")
     private Endereco endereco;
 
-    @OneToMany(mappedBy = "locador")
-    private List<Aluguel> locacoesComoLocador;
+    @OneToMany(mappedBy = "inquilino")
+    private List<Aluguel> locacoesComoInquilino;
 
     @OneToMany(mappedBy = "fiador")
     private List<Aluguel> locacoesComoFiador;

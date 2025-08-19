@@ -1,5 +1,6 @@
 package com.andrey.tcc.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -51,6 +52,7 @@ public class Encargo {
         this.descricao = descricao;
     }
 
+    @JsonIgnore
     public Aluguel getAluguel() {
         return aluguel;
     }
