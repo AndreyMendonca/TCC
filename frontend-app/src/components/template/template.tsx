@@ -14,7 +14,7 @@ export const Template = ({children, route }:Props) =>{
     return (
         <SidebarProvider>
             <AppSidebar />
-            <SidebarInset className="flex h-svh flex-col">
+            <SidebarInset className="flex flex-col">
                 <header className="sticky top-0 z-10 flex bg-background h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
                     <div className="flex items-center gap-2 px-4">
                         <SidebarTrigger className="-ml-1" />
@@ -25,7 +25,7 @@ export const Template = ({children, route }:Props) =>{
                         <HeaderBreadCrumb breadcrumbs={route} />
                     </div>
                 </header>
-                <div className="flex flex-1 flex-col overflow-y-auto gap-4 px-4">
+                <div className="flex flex-1 flex-col gap-4 px-4 pb-5">
                     {children}
                 </div>
             </SidebarInset>
