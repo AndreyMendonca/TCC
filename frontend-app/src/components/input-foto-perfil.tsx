@@ -17,6 +17,7 @@ export default function InputFotoPerfil() {
         <div className="flex flex-col items-center gap-2">
             <div className="relative inline-flex">
                 <Button
+                    type="button"
                     variant="outline"
                     className="relative size-16 overflow-hidden p-0 shadow-none"
                     onClick={openFileDialog}
@@ -39,6 +40,7 @@ export default function InputFotoPerfil() {
                 </Button>
                 {previewUrl && (
                     <Button
+                        type="button"
                         onClick={() => removeFile(files[0]?.id)}
                         size="icon"
                         className="border-background focus-visible:border-background absolute -top-2 -right-2 size-6 rounded-full border-2 shadow-none"

@@ -78,7 +78,7 @@ export default function InputUploadArquivos() {
     })
 
     return (
-        <div className="flex flex-col gap-2 w-full max-h-100">
+        <div className="flex flex-col gap-2 w-full">
             {/* Drop area */}
             <div
                 role="button"
