@@ -42,7 +42,7 @@ export const formSchema = z.object({
     dataNascimento: z.date().optional(),
     profissao: z.string().optional(),
     ativa: z.boolean(),
-    tipoPessoaEnum: z.string().min(1, { message: "O tipo de pessoa é obrigatório" }),
+    tipoPessoa: z.string().min(1, { message: "O tipo de pessoa é obrigatório" }),
     endereco: enderecoSchema.optional(),
 });
 
@@ -57,18 +57,28 @@ const formularioPessoasPage = () => {
         defaultValues: {
             nome: '',
             sobrenome: '',
+            cpf: '',
+            email: '',
+            dataNascimento: undefined,
+            profissao: '',
             ativa: true,
-            tipoPessoaEnum: '',
+            tipoPessoa: '',
+            endereco: {
+                cep: '',
+                logradouro: '',
+                numero: '',
+                bairro: '',
+                localidade: '',
+                uf: '',
+                pais: '',
+            },
         }
     })
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        alert("Estoua aqui")
         await service.salvar(values)
             .then(() => toast.success("Sucesso", { description: "Sucesso ao cadastrar pessoa" }))
             .catch(() => toast.error("Erro", { description: "Erro ao cadastrar pessoa" }));
-
-        console.log(values);
     }
 
 
@@ -306,7 +316,7 @@ const formularioPessoasPage = () => {
                                 />
                                 <FormField
                                     control={form.control}
-                                    name="tipoPessoaEnum"
+                                    name="tipoPessoa"
                                     render={({ field }) => (
                                         <FormItem >
                                             <FormLabel>Tipo de pessoa *</FormLabel>
@@ -320,8 +330,8 @@ const formularioPessoasPage = () => {
                                                 <SelectContent >
                                                     <SelectGroup>
                                                         <SelectLabel>Tipo</SelectLabel>
-                                                        <SelectItem value="inquilino">Inquilino</SelectItem>
-                                                        <SelectItem value="fiador">Fiador</SelectItem>
+                                                        <SelectItem value="INQUILINO">Inquilino</SelectItem>
+                                                        <SelectItem value="FIADOR">Fiador</SelectItem>
                                                     </SelectGroup>
                                                 </SelectContent>
                                             </Select>

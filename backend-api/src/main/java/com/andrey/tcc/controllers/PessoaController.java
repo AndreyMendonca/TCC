@@ -44,11 +44,14 @@ public class PessoaController {
 
     @PostMapping(value = "/todosDados")
     public ResponseEntity<PessoaResponseDTO> salvar(
-            @ModelAttribute PessoaRequestDTO dto,
+            @ModelAttribute PessoaRequestDTO dto
+    ) throws IOException {
+        /*
+        * ,
             @RequestPart(value = "imagemPerfil", required = false) MultipartFile imagemPerfil,
             @RequestPart(value = "arquivos", required = false) List<MultipartFile> arquivos
-    ) throws IOException {
-        PessoaResponseDTO salva = service.salvarComArquivo(dto, imagemPerfil, arquivos);
+        * */
+        PessoaResponseDTO salva = service.salvarComArquivo(dto);
         return ResponseEntity.ok(salva);
     }
 

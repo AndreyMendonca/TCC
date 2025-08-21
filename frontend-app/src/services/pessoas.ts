@@ -10,22 +10,8 @@ export const PessoasService = {
 
         formData.append('nome', pessoa.nome);
         formData.append('sobrenome', pessoa.sobrenome);
-        formData.append('cpf', "oi");
-        formData.append('email', "oi");
-        formData.append('profissao', "oi");
         formData.append('ativa', String(pessoa.ativa));
-        formData.append('tipoPessoaEnum', pessoa.tipoPessoaEnum);
-        if (pessoa.dataNascimento) {
-            formData.append('dataNascimento', pessoa.dataNascimento.toISOString());
-        }
-        if (pessoa.endereco) {
-            formData.append('endereco.cep', pessoa.endereco.cep ?? '');
-            formData.append('endereco.numero', pessoa.endereco.numero ?? '');
-            formData.append('endereco.bairro', pessoa.endereco.bairro ?? 'oi');
-            formData.append('endereco.localidade', pessoa.endereco.localidade ?? '');
-            formData.append('endereco.uf', pessoa.endereco.uf ?? 'oi');
-            formData.append('endereco.pais', pessoa.endereco.pais ?? 'oi');
-        }
+        formData.append('tipoPessoa', pessoa.tipoPessoa);
 
         console.log('FormData:', formData);
 

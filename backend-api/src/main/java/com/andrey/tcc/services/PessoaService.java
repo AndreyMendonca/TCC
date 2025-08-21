@@ -50,8 +50,14 @@ public class PessoaService {
         repository.save(Mapper.parseObject(dto, Pessoa.class));
     }
 
-    public PessoaResponseDTO salvarComArquivo(PessoaRequestDTO data, MultipartFile imagemPerfil, List<MultipartFile> arquivos) throws IOException {
+    public PessoaResponseDTO salvarComArquivo(PessoaRequestDTO data) throws IOException {
+        /*
+        * , MultipartFile imagemPerfil, List<MultipartFile> arquivos
+        * */
+
         Pessoa pessoa = Mapper.parseObject(data, Pessoa.class);
+
+        /*
 
         if (imagemPerfil != null && !imagemPerfil.isEmpty()) {
             Arquivo img = new Arquivo();
@@ -60,14 +66,14 @@ public class PessoaService {
             img.setArquivo(imagemPerfil.getBytes());
             arquivoRepository.save(img);
             pessoa.setImagemPerfil(img);
-        }
+        } */
 
         // Salvar a pessoa primeiro para ter o ID
         Pessoa pessoaSalva = repository.save(pessoa);
 
         List<Arquivo> arquivosRetorno = new ArrayList<>();
 
-        // Se tiver outros arquivos
+        /* Se tiver outros arquivos
         if (arquivos != null) {
             for (MultipartFile file : arquivos) {
                 Arquivo arq = new Arquivo();
@@ -78,7 +84,7 @@ public class PessoaService {
                 arquivoRepository.save(arq);
                 arquivosRetorno.add(arq);
             }
-        }
+        } */
 
         PessoaResponseDTO dto = Mapper.parseObject(pessoa, PessoaResponseDTO.class);
 

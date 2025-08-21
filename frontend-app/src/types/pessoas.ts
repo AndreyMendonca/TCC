@@ -9,6 +9,6 @@ export type Pessoa = {
     dataNascimento?: Date;
     profissao?: string;
     ativa: boolean;
-    tipoPessoaEnum: string;
+    tipoPessoa: string;
     endereco?: Endereco; 
 }
